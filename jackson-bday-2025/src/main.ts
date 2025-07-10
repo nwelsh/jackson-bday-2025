@@ -18,7 +18,7 @@ document.body.appendChild(renderer.domElement);
 const geometry = new THREE.BoxGeometry();
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load('./img/boys.jpeg');
-const material = new THREE.MeshBasicMaterial({ map: texture });
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
