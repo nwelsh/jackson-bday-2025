@@ -34,7 +34,7 @@ function Cube({
       onPointerDown={onClick}
       name={name}
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <boxGeometry args={[3, 3, 3]} />
       <meshStandardMaterial map={texture} />
     </mesh>
   );
