@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { Mesh, MeshStandardMaterial } from "three";
+import { Mesh, MeshStandardMaterial, TextureLoader } from "three";
 import * as THREE from "three";
 import "./App.css";
 
-// return cube
+// === Cube Component ===
 function Cube({
   position,
   textureUrl,
@@ -18,10 +18,8 @@ function Cube({
 }) {
   const meshRef = useRef<Mesh>(null);
 
-  // Load texture once
-  const texture = useLoader(THREE.TextureLoader, textureUrl);
+  const texture = useLoader(TextureLoader, textureUrl);
 
-  // Rotate cube every frame
   useFrame(() => {
     if (meshRef.current) {
       meshRef.current.rotation.x += 0.005;
@@ -30,50 +28,63 @@ function Cube({
   });
 
   return (
-    <mesh position={position} ref={meshRef} onPointerDown={onClick} uuid={name}>
+    <mesh
+      position={position}
+      ref={meshRef}
+      onPointerDown={onClick}
+      name={name}
+    >
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial map={texture} />
     </mesh>
   );
 }
 
+// === App Component ===
 export default function App() {
-  const [selectedCube, setSelectedCube] = useState<{
-    uuid: string;
-    color: string;
-  } | null>(null);
+  // === Messages in order ===
+  const messages = [
+    "Hi I'm Jackson! 🎸",
+    "I'm 23 🤘",
+    "I love Buffalo Wild Wings ❤️‍🔥",
+    "Thursdays they have BOGO 🎶",
+    "I love Jordyn 🔨",
+    "They don't ONLY sell wings 🚀",
+    "I love power tools!!! 😜",
+    "They actually have burgers and other menu items — super reasonably priced 🤾🏾‍♀️",
+  ];
 
-  const handleCubeClick = (e: any) => {
-    const mesh = e.object as Mesh;
-    const material = mesh.material as MeshStandardMaterial | undefined;
+  const [messageIndex, setMessageIndex] = useState(0);
 
-    // material can be an array
-    const color = material?.color?.getHexString()
-      ? `#${material.color.getHexString()}`
-      : "#ffffff";
-
-    setSelectedCube({
-      uuid: mesh.uuid,
-      color,
-    });
+  // === Message click handler ===
+  const handleCubeClick = () => {
+    setMessageIndex((prevIndex) =>
+      prevIndex + 1 < messages.length ? prevIndex + 1 : 0
+    );
   };
 
   return (
     <div className="canvas">
-      <div className="left">
-        <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-          {/* lighting to see the cubes */}
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[1, 1, 1]} />
+      {/* Big birthday title */}
+      <div className="title">HAPPY BIRTHDAY JACKSON</div>
 
-          <Cube
-            position={[-1, 0, 0]}
-            textureUrl="./img/jackson.jpg"
-            onClick={handleCubeClick}
-            name="leftCube"
-          />
-        </Canvas>
-      </div>
+      {/* Subtitle */}
+      <div className="subtitle">Click on Jackson for a surprise</div>
+
+      {/* Message at bottom */}
+      <div className="message">{messages[messageIndex]}</div>
+
+      <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[1, 1, 1]} />
+
+        <Cube
+          position={[0, 0, 0]}
+          textureUrl="./img/jackson.jpg"
+          onClick={handleCubeClick}
+          name="jacksonCube"
+        />
+      </Canvas>
     </div>
   );
 }
