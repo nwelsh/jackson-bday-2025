@@ -17,8 +17,8 @@ document.body.appendChild(renderer.domElement);
 // === Cube with texture ===
 const geometry = new THREE.BoxGeometry();
 const textureLoader = new THREE.TextureLoader();
-const texture = textureLoader.load('./public/img/jackson.jpg');
-const material = new THREE.MeshBasicMaterial({ map: texture });
+// const texture = textureLoader.load('./public/img/jackson.jpg');
+const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
