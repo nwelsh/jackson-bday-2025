@@ -4,7 +4,6 @@ import { Mesh, MeshStandardMaterial, TextureLoader } from "three";
 import * as THREE from "three";
 import "./App.css";
 
-// === Cube Component ===
 function Cube({
   position,
   textureUrl,
@@ -40,24 +39,39 @@ function Cube({
   );
 }
 
-// === App Component ===
 export default function App() {
-  // === Messages in order ===
   const messages = [
     "Hi I'm Jackson! 🎸",
     "I'm 23 🤘",
+    "I love power tools!!! 🏄🏿‍♀️",
+    "I grill all the chicken at the BBQ 🐓",
     "I love Buffalo Wild Wings ❤️‍🔥",
     "Thursdays they have BOGO 🎶",
-    "I love Jordyn 🔨",
+    "I work in film 🎥",
+    "I love Jordyn 🦐",
+    "I smoke cigarettes 🧚🏼‍♂️",
     "They don't ONLY sell wings 🚀",
-    "I love power tools!!! 😜",
-    "They actually have burgers and other menu items — super reasonably priced 🤾🏾‍♀️",
+    "Buffalo Wild Wings I mean, they sell a bunch of other things too",
+    "They actually have sauces and other menu items — super reasonably priced 🤾🏾‍♀️",
+    "I am a vegetarian 🩰",
+    "https://www.buffalowildwings.com/ ✅",
+    "(773) 868-9453 (thats the bdubs phone number) 🎻",
+    "Let them know you know me there TRUST ME they'll hook you up 🐲",
+    "My full name is jackson 🤸🏾",
+    "🧛🏼",
   ];
 
   const [messageIndex, setMessageIndex] = useState(0);
 
   // === Message click handler ===
   const handleCubeClick = () => {
+    if(messageIndex === messages.length - 1) {
+      const confirmCall = window.confirm("Now calling buffalo wild wings!!! 😀");
+    if (confirmCall) {
+      window.location.href = "tel:+17738689453";
+    }
+    }
+
     setMessageIndex((prevIndex) =>
       prevIndex + 1 < messages.length ? prevIndex + 1 : 0
     );
@@ -65,24 +79,23 @@ export default function App() {
 
   return (
     <div className="canvas">
-      {/* Big birthday title */}
-      <div className="title">HAPPY BIRTHDAY JACKSON</div>
+      <div className="title">HAPPY BIRTHDAY JACKSON 🎉🥳</div>
 
-      {/* Subtitle */}
-      <div className="subtitle">Click on Jackson for a surprise</div>
+      <div className="subtitle">Click on jacksoncube for a surprise!!!! 😳</div>
+      <div className="sign">💚 Mike and Nicole</div>
 
-      {/* Message at bottom */}
       <div className="message">{messages[messageIndex]}</div>
 
-      <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+      <Canvas camera={{ position: [0, 0, 5], fov: 60 }} className="cube">
         <ambientLight intensity={0.5} />
         <directionalLight position={[1, 1, 1]} />
 
         <Cube
-          position={[0, 0, 0]}
+          position={[0, 0, 0.25]}
           textureUrl="./img/jackson.jpg"
           onClick={handleCubeClick}
           name="jacksonCube"
+          
         />
       </Canvas>
     </div>
